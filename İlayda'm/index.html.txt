@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seni Seviyorum</title>
+  <style>
+    body {
+      margin: 0;
+      background: pink;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .heart, .bear {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-size: cover;
+      z-index: 1;
+    }
+
+    .heart {
+      background-image: url('https://emoji.slack-edge.com/T02JN4SMX/heart/7e9ecf8e71d985f7.png');
+    }
+
+    .bear {
+      background-image: url('https://cdn-icons-png.flaticon.com/512/616/616408.png');
+    }
+
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 10;
+    }
+
+    .container p {
+      font-size: 24px;
+      color: darkred;
+      max-width: 300px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 20px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 10px;
+      border: none;
+    }
+
+    #yes {
+      background-color: hotpink;
+      color: white;
+    }
+
+    #no {
+      background-color: crimson;
+      color: white;
+      position: absolute;
+    }
+
+    .floating-hearts {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .heart-float {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('https://emoji.slack-edge.com/T02JN4SMX/heart/7e9ecf8e71d985f7.png');
+      background-size: cover;
+      animation: floatUp 4s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    #message {
+      font-size: 28px;
+      color: deeppink;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p>Bu konunun çok ciddi olduğunu biliyorum bal böceğim, seni çok seviyorum, ben meleğim olmadan uyuyamam. Barışmak istiyorum, ne dersin?</p>
+    <button id="yes">Evet</button>
+    <button id="no">Hayır</button>
+    <div id="message"></div>
+  </div>
+
+  <div class="floating-hearts" id="floatingHearts"></div>
+
+  <script>
+    // Kalpler ve ayıcıklar rastgele yerlerde
+    const addRandomIcons = () => {
+      for (let i = 0; i < 20; i++) {
+        const icon = document.createElement('div');
+        icon.className = Math.random() > 0.5 ? 'heart' : 'bear';
+        icon.style.top = Math.random() * window.innerHeight + 'px';
+        icon.style.left = Math.random() * window.innerWidth + 'px';
+        document.body.appendChild(icon);
+      }
+    };
+
+    addRandomIcons();
+
+    const noBtn = document.getElementById('no');
+
+    function moveButtonRandomly() {
+      noBtn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+      noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+    }
+
+    noBtn.addEventListener('mouseover', moveButtonRandomly);
+    noBtn.addEventListener('touchstart', moveButtonRandomly);
+
+    document.getElementById('yes').addEventListener('click', () => {
+      document.getElementById('message').innerText = "Ben de öyle düşünmüştüm İlayda'm ♥";
+
+      // Kalpler uçsun
+      const heartsContainer = document.getElementById('floatingHearts');
+      for (let i = 0; i < 50; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart-float';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDelay = (Math.random() * 2) + 's';
+        heartsContainer.appendChild(heart);
+      }
+    });
+  </script>
+</body>
+</html>
